@@ -33,19 +33,9 @@ module.exports.register = (request, response) => {
 };
 
 
-module.exports.logout = async (req, res) => {
-    try {
-        res.clearCookie("usertoken");
-        res.status(201).json({
-            msg: "Logout Successful",
-            success: true,
-        });
-    } catch (error) {
-        res.status(500).json({
-            msg: "Logout Failed",
-            success: false,
-        });
-    }
+module.exports.logout= (req, res) => {
+    res.clearCookie('usertoken');
+    res.sendStatus(200);
 }
 module.exports.login = async (req, res) => {
     const user = await User.findOne({

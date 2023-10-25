@@ -58,21 +58,21 @@ function App() {
         <Routes>
           {isLogedIn ? (
             <>
-              <Route path="/logout" element={<Logout />} />
-              <Route path="/create-product" element={<CreateProduct />} />
-              <Route path="/products" element={<ProductList />} />
-              <Route path="/my-products" element={<MyProducts />} />
-              <Route path="/product/:id/edit" element={<UpdateProduct />} />
-              <Route path="/product/:id" element={<ProductDetails />} />
-              <Route path="/updateprofile/:id" element={<UpdateProfile />} />
+              <Route path="/logout" element={<Logout isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/create-product" element={<CreateProduct isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/products" element={<ProductList  isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/my-products" element={<MyProducts isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/product/:id/edit" element={<UpdateProduct isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/product/:id" element={<ProductDetails isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/updateprofile/:id" element={<UpdateProfile isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
             </>
           ) : (
             <>
-              <Route path="/logout" element={<Logout />} />
-              <Route path="/products" element={<ProductList />} />
-              <Route path="/product/:id" element={<ProductDetails />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<LogIn />} />
+              <Route path="/logout" element={<Logout isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/products" element={<ProductList isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/product/:id" element={<ProductDetails isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/register" element={<Register isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+              <Route path="/login" element={<LogIn isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn}/>} />
             </>
           )}
         </Routes>
