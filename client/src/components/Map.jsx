@@ -4,7 +4,7 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import './styles.css'
 
 const Map = () => {
-  const apiKey = "AIzaSyC_CXDy5sGz5A7xe6adxJ2QW1HY5smG0Fs";
+  const apiKey = "AIzaSyC_CXDy5sGz5A7xe6adxJ2QW1HY5smG0";
 
   const [selectedPlace, setSelectedPlace] = useState(null);
 
