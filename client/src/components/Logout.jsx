@@ -20,15 +20,24 @@ const Logout = () => {
         localStorage.removeItem('userId');
         localStorage.removeItem('isLogedIn');
         // navigate('/products');
-        window.location.href = '/';
+        window.location.href = '/register';
       });
   };
 
   return (
-    <div>
-      <p>{isLogedIn ? "You are logged in." : "You are already logged out."}</p>
+    <div className="text-center">
+      <p className="text-gray-800 text-lg my-4">
+        {isLogedIn
+          ? "You are logged in. Do you want to log out?"
+          : "You are already logged out."}
+      </p>
       {isLogedIn ? (
-        <button onClick={handleLogout}>Log Out</button>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg"
+        >
+          Log me Out
+        </button>
       ) : null}
     </div>
   );

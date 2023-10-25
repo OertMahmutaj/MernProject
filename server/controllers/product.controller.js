@@ -22,7 +22,6 @@ module.exports.createProduct = (req, res) => {
 };
 
 module.exports.getAllProducts = (req, res) => {
-    // Fetch a list of all products
     Product.find()
         .then((products) => {
             res.status(200).json(products);
@@ -49,13 +48,11 @@ module.exports.deleteProduct = (req, res) => {
 
 module.exports.updateProduct = (req, res) => {
     const { id } = req.params;
-    const productData = req.body;
-    // const { name } = productData;
-    
+    const productData = req.body;    
         Product.findByIdAndUpdate(id, productData, { new: true, runValidators: true })
             .then(updatedProduct => {
               if (!updatedProduct) {
-                return res.status(404).json({ message: 'Pet not found' });
+                return res.status(404).json({ message: 'Product not found' });
               }
               res.status(200).json(updatedProduct);
             })

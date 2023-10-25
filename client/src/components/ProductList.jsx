@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const ProductList = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     axios
@@ -28,31 +28,37 @@ const ProductList = () => {
   return (
     <div className="p-6">
       <nav className="flex justify-between mb-4">
-        <Link to="/create-product" className="btn">
+        <Link to={`/updateprofile/${userId}`} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2">
+          Update Profile
+        </Link>
+        <Link to="/create-product" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2">
           Add Product
         </Link>
-        <Link to="/my-products" className="btn">
+        <Link to="/my-products" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2">
           My Products
         </Link>
+        <Link to="/logout" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2">
+          Logout
+        </Link>
       </nav>
-      <h2 className="text-2xl font-semibold mb-4">Product List</h2>
-      <table className="min-w-full">
-        <thead>
+      <h2 className="text-3xl font-semibold text-gray-800 mb-4">Product List</h2>
+      <table className="min-w-full bg-white rounded-lg shadow overflow-hidden">
+        <thead className="bg-indigo-500 text-white">
           <tr>
-            <th className="text-left">Name</th>
-            <th className="text-left">Price</th>
-            <th className="text-left">Actions</th>
+            <th className="py-2 px-3 text-left">Name</th>
+            <th className="py-2 px-3 text-left">Price</th>
+            <th className="py-2 px-3 text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product) => (
             <tr key={product._id}>
-              <td>{product.name}</td>
-              <td>${product.price}</td>
+              <td className="py-2 px-3 text-gray-800">{product.name}</td>
+              <td className="py-2 px-3 text-gray-800">${product.price}</td>
               <td>
                 <button
                   onClick={() => handleViewClick(product._id)}
-                  className="btn"
+                  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2"
                 >
                   View
                 </button>

@@ -6,8 +6,10 @@ module.exports = (app) => {
     app.post("/api/register", PharmaController.register);
     app.post("/api/login", PharmaController.login);
     app.post("/api/logout", PharmaController.logout);
+    app.patch("/api/updateprofile/:id", authenticate,PharmaController.updateProfile);
+    app.get("/api/users/:id", PharmaController.getProfile);
 
-    app.post('/api/create-product',authenticate,ProductController.createProduct);
+    app.post('/api/create-product', authenticate,ProductController.createProduct);
     app.get('/api/products', ProductController.getAllProducts); 
     app.get('/api/my-products', authenticate, ProductController.getAllProducts);
     app.delete('/api/product/:id', authenticate, ProductController.deleteProduct);

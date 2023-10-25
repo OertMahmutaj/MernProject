@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const UpdateProduct = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { id } = useParams();
     const [val, setVal] = useState({})
 

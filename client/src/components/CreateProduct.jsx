@@ -44,66 +44,75 @@ const CreateProduct = () => {
     };
 
     return (
-        <div className="form-container">
-            <nav className="nav">
-                <Link to="/products" className="nav-link">
+        <div className="form-container p-4">
+            <nav className="nav mb-4">
+                <Link to="/products" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2">
                     Products
                 </Link>
             </nav>
             <form onSubmit={onSubmitHandler}>
-                <div>
-                    <label className="form-label">Product Name:</label>
+                <div className="mb-4">
+                    <label className="form-label" htmlFor="name">
+                        Product Name:
+                    </label>
                     <input
                         type="text"
+                        id="name"
                         name="name"
                         value={formData.name}
-                        onChange={(e) =>
-                            setFormData({ ...formData, name: e.target.value })
-                        }
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="form-input"
                     />
                     {val.name ? (
-                        <p className="text-sm text-red-500 ">{val.name.message}</p>
+                        <p className="text-sm text-red-500">{val.name.message}</p>
                     ) : (
-                        ''
+                        ""
                     )}
                 </div>
-                <div>
-                <label className="form-label">Product Description:</label>
-                <input
-                    type="text"
-                    name="description"
-                    value={formData.description}
-                    onChange={(e) =>
-                        setFormData({ ...formData, description: e.target.value })
-                    }
-                />
-                {val.description ? (
-                        <p className="text-sm text-red-500 ">{val.description.message}</p>
+                <div className="mb-4">
+                    <label className="form-label" htmlFor="description">
+                        Product Description:
+                    </label>
+                    <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        value={formData.description}
+                        onChange={(e) =>
+                            setFormData({ ...formData, description: e.target.value })
+                        }
+                        className="form-input"
+                    />
+                    {val.description ? (
+                        <p className="text-sm text-red-500">{val.description.message}</p>
                     ) : (
-                        ''
+                        ""
                     )}
                 </div>
-                <div>
-                <label className="form-label">Price:</label>
-                <input
-                    type="number"
-                    name="price"
-                    value={formData.price}
-                    onChange={(e) =>
-                        setFormData({ ...formData, price: e.target.value })
-                    }
-                />
-                {val.price ? (
-                        <p className="text-sm text-red-500 ">{val.price.message}</p>
+                <div className="mb-4">
+                    <label className="form-label" htmlFor="price">
+                        Price:
+                    </label>
+                    <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        value={formData.price}
+                        onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                        className="form-input"
+                    />
+                    {val.price ? (
+                        <p className="text-sm text-red-500">{val.price.message}</p>
                     ) : (
-                        ''
+                        ""
                     )}
                 </div>
-                <button type="submit" className="form-button">
+                <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2">
                     Add Product
                 </button>
             </form>
         </div>
+
     );
 };
 

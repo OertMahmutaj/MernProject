@@ -19,9 +19,14 @@ const UserSchema = new mongoose.Schema({
             message: "Please accept the terms and conditions"
         },
         default: false
-    }     
+    },
+    profilePicture: {
+      type: String,
+    },  
+    verified: {type: Boolean, 
+      default: false
+    },   
 }, { timestamps: true });
-
 
 UserSchema.virtual('confirmPassword')
   .get( () => this._confirmPassword )
