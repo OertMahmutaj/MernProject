@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./styles.css";
 
-// Import your components here
 import Register from "./components/Register";
 import LogIn from "./components/Login";
 import Logout from "./components/Logout";
@@ -17,6 +16,7 @@ import ProductDetails from "./components/ProductDetails";
 import RatingGraph from "./components/RatingGraph";
 import ReviewNumberGraph from "./components/ReviewNumberGraph";
 import PriceGraph from "./components/PriceGraph";
+import ContactForm from "./components/ContactForm";
 
 function App() {
   const [isLogedIn, setIsLoggedIn] = useState(false);
@@ -86,6 +86,7 @@ function App() {
 
         <Routes>
           <Route path="/reviewnumbergraph" element={<ReviewNumberGraph isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/contactform" element={<ContactForm isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/pricegraph" element={<PriceGraph isLogedIn={isLogedIn} setIsLoggedIn={setIsLoggedIn} />} />
           {loggedIn ? (
             <>
@@ -112,25 +113,25 @@ function App() {
         </Routes>
       </BrowserRouter>
 
-      <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
-        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="http://localhost:5173/products" class="hover:underline">Oert™</a>. All Rights Reserved.
+      <footer className="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
+        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="http://localhost:5173/products" className="hover:underline">Oert™</a>. All Rights Reserved.
         </span>
-        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+        <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
           <li>
-            <a href="#" class="mr-4 hover:underline md:mr-6">About</a>
+            <a href="#" className="mr-4 hover:underline md:mr-6">About</a>
           </li>
           <li>
-            <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+            <a href="#" className="mr-4 hover:underline md:mr-6">Privacy Policy</a>
           </li>
           <li>
-            <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+            <a href="#" className="mr-4 hover:underline md:mr-6">Licensing</a>
           </li>
           <li>
-            <a href="#" class="hover:underline">Contact</a>
+            <a href="/contactform" className="hover:underline">Contact</a>
           </li>
         </ul>
       </footer>
-      
+
 
     </div>
   );

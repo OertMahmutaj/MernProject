@@ -79,7 +79,7 @@ const RatingGraph = () => {
         
         <div className="text-center">
             
-            <h2 className="text-2xl font-bold mb-4 text-blue-700">Product Ratings</h2>
+            <h2 className="text-2xl font-bold mb-4 text-blue-700">Products' Average Ratings</h2>
             <div className="w-full max-w-xl mx-auto">
                 <canvas ref={chartRef} width={800} height={800}></canvas>
             </div>

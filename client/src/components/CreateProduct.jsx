@@ -85,10 +85,9 @@ const CreateProduct = () => {
     };
 
     return (
-        <section class="bg-white dark:bg-gray-900">
+        <section className="bg-white dark:bg-gray-900">
         <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new product</h2>
-            {/* <div className="grid gap-4 sm:grid-cols-2 sm:gap-6"> */}
                 <form encType="multipart/form-data" onSubmit={handleCreateProduct}>
                     <div className="sm:col-span-2">
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="name">
@@ -189,16 +188,15 @@ const CreateProduct = () => {
                         )}
                     </div>
                     </div>
-                    
-                </form>
-                <button
+                    <button
                         type="submit"
                         className="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
                     >
                         Add Product
                     </button>
+                </form>
+                
             </div>
-        {/* </div> */}
         </section>
     );
 };

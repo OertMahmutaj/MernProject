@@ -1,7 +1,7 @@
 const Product = require('../models/product.model');
 const User = require('../models/pharma.models');
 
-exports.createProduct = async (req, res) => {
+module.exports.createProduct = async (req, res) => {
     const userId = req.body.userId;
   
     try {

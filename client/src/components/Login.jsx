@@ -7,14 +7,21 @@ import ReCAPTCHA from "react-google-recaptcha"
 const LogIn = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-
+  const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [recaptchaValue, setRecaptchaValue] = useState('');
   const captchaRef = useRef()
 
   const [validationErrors, setValidationErrors] = useState({});
+ 
 
+  const handleRememberMeChange = (e) => {
+    setRememberMe(e.target.checked);
+  };
+
+  const storedEmail = localStorage.getItem('storedEmail')
+  console.log(storedEmail)
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const newRecaptchaValue = captchaRef.current.getValue();
@@ -26,16 +33,20 @@ const LogIn = ({ setIsLoggedIn }) => {
         email,
         password,
         recaptchaValue: newRecaptchaValue,
+        rememberMe,
+        storedEmail,
       }, {
         withCredentials: true
       })
       .then((res) => {
         if (res.data) {
           console.log(res.data);
+          console.log(rememberMe)
           setValidationErrors({});
           setIsLoggedIn(true)
           localStorage.setItem('isLoggedIn', true);
           localStorage.setItem('userId', res.data.userId);
+          localStorage.setItem('storedEmail', res.data.user.email);
           navigate('/products');
         } else {
           console.error('Response no data:', response);
@@ -62,6 +73,7 @@ const LogIn = ({ setIsLoggedIn }) => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
+            {/* {validationErrors.rememberMeToken && <p className="mt-2 text-sm text-red-600 dark:text-red-500">Please fill out the fields below</p>} */}
             <form className="space-y-4 md:space-y-6" action="#" onSubmit={onSubmitHandler}>
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -102,10 +114,12 @@ const LogIn = ({ setIsLoggedIn }) => {
                   <div className="flex items-center h-5">
                     <input
                       id="remember"
+                      name='rememberMe'
                       aria-describedby="remember"
                       type="checkbox"
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      
+                      checked={rememberMe}
+                      onChange={handleRememberMeChange}
                     />
                   </div>
                   <div className="ml-3 text-sm">

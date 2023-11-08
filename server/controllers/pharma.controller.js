@@ -17,8 +17,6 @@ const {
 } = require('../utils/recaptcha');
 
 module.exports.register = async (req, res) => {
-  console.log("This comes from Customer Register");
-  console.log(process.env.FIRST_SECRET_KEY);
   const {
     terms,
     profilePicture
@@ -102,32 +100,108 @@ module.exports.logout = (req, res) => {
   res.sendStatus(200);
 }
 
+module.exports.logoutAll = (req,res) => {
+  res.clearCookie('usertoken');
+  res.clearCookie('rememberMeToken');
+  res.sendStatus(200);
+}
+
 module.exports.login = async (req, res) => {
   const recaptchaResponse = req.body.recaptchaValue;
+  const {email, storedEmail, rememberMe} = req.body;
 
+  if (storedEmail) {
+    try {
+      const user = await User.findOne({ email: storedEmail });
+
+      if (!user) {
+        return res.status(401).json({
+          errors: {
+            rememberMeToken: {
+              message: "Invalid Remember Me Token",
+            },
+          },
+        });
+      }
+
+      const userToken = jwt.sign({ id: user._id }, process.env.FIRST_SECRET_KEY);
+
+      res.cookie("usertoken", userToken, {
+        httpOnly: true,
+      });
+
+      const userData = {
+        userId: user._id,
+        name: user.name,
+        email: user.email,
+      };
+
+      return res.status(200).json({
+        msg: "Logged in using Remember Me token",
+        userId: user._id,
+        name: user.name,
+        user: userData,
+      });
+    } catch (error) {
+      return res.status(401).json({
+        errors: {
+          rememberMeToken: {
+            message: "Invalid Remember Me Token",
+          },
+        },
+      });
+    }
+  }
+
+  if (rememberMe && storedEmail) {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({
+        errors: {
+          email: {
+            message: "User Does Not Exist",
+          },
+        },
+      });
+    }
+
+    const userToken = jwt.sign({ id: user._id }, process.env.FIRST_SECRET_KEY);
+
+    res.cookie("usertoken", userToken, {
+      httpOnly: true,
+    });
+
+
+    return res.status(200).json({
+      msg: "Logged in using Remember Me",
+      userId: user._id,
+      name: user.name,
+    });
+  }
   const recaptchaVerification = await verifyRecaptcha(recaptchaResponse);
 
   if (!recaptchaVerification) {
     return res.status(401).json({
       errors: {
         reCaptcha: {
-          message: "ReCaptcha Validation failed"
-        }
-      }
+          message: "ReCaptcha Validation failed",
+        },
+      },
     });
   }
 
   const user = await User.findOne({
-    email: req.body.email
+    email,
   });
 
   if (user === null) {
     return res.status(401).json({
       errors: {
         email: {
-          message: "User Does Not Exist"
-        }
-      }
+          message: "User Does Not Exist",
+        },
+      },
     });
   }
 
@@ -137,9 +211,9 @@ module.exports.login = async (req, res) => {
     return res.status(401).json({
       errors: {
         password: {
-          message: "Password is not correct"
-        }
-      }
+          message: "Password is not correct",
+        },
+      },
     });
   }
 
@@ -147,24 +221,35 @@ module.exports.login = async (req, res) => {
     return res.status(401).json({
       errors: {
         email: {
-          message: "Please verify your email first"
-        }
-      }
+          message: "Please verify your email first",
+        },
+      },
     });
   }
 
-  const userToken = jwt.sign({
-    id: user._id
-  }, process.env.FIRST_SECRET_KEY);
+  const userToken = jwt.sign({ id: user._id }, process.env.FIRST_SECRET_KEY);
 
   res.cookie("usertoken", userToken, {
-    httpOnly: true
+    httpOnly: true,
   });
+
+  if(rememberMe) {
+  userData = {
+    userId: user._id,
+    name: user.name,
+    email: user.email,
+  }} else {
+    userData = {
+      userId: user._id,
+      name: user.name,
+    }
+  };
 
   res.status(200).json({
     msg: "success!",
     userId: user._id,
     name: user.name,
+    user: userData,
   });
 };
 
