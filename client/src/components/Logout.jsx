@@ -23,6 +23,7 @@ const Logout = ({setIsLoggedIn}) => {
         localStorage.removeItem('userId');
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('storedEmail');
+        
         window.location.href = '/register';
       });
       

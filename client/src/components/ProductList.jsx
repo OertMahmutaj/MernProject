@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-const ProductList = () => {
+const ProductList = ({setIsLoggedIn}) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [userId] = useState(localStorage.getItem('userId'));
   const [darkMode, setDarkMode] = useState(false);
   const [sortBy, setSortBy] = useState('name'); 
   const [sortOrder, setSortOrder] = useState('asc');
+
+  setIsLoggedIn(localStorage.getItem('isLogedIn'))
+
 
   useEffect(() => {
     const fetchProducts = async () => {
