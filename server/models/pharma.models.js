@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
 const bcrypt = require('bcrypt');
+
 const UserSchema = new mongoose.Schema({
     name: { type: String ,
     required:[true,"Name is required"]},
@@ -23,9 +23,11 @@ const UserSchema = new mongoose.Schema({
     profilePicture: {
       type: String,
     },  
-    verified: {type: Boolean, 
-      default: false
-    },   
+    verified: {
+      type: Boolean,
+      required: [true, "Please verify your email address"],
+      default: false,
+    },  
 }, { timestamps: true });
 
 UserSchema.virtual('confirmPassword')

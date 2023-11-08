@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons'; 
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-const Register = () => {
+const Register = ({setIsLoggedIn}) => {
     const navigate = useNavigate()
 
     const [name, setName] = useState("");
@@ -61,12 +61,12 @@ const Register = () => {
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-
+                setIsLoggedIn(true)
                 setVal({})
                 localStorage.setItem('isLogedIn', true);
                 localStorage.setItem('userId', res.data.userId);
                 setStateLoged(true)
-                navigate("/products")
+                navigate("/user/verify-email")
             })
             .catch((err) => {
                 if (err.response && err.response.status === 413) {
@@ -75,7 +75,9 @@ const Register = () => {
                 } else {
                   const errorMessage = err.response?.data?.message || "An error occurred.";
                   console.log(errorMessage);
+                  console.log(err);
                   setUnique(err.response);
+                  console.log(unique);
                   
                   const validationErrors = err.response?.data?.errors;
                   if (validationErrors) {
@@ -84,7 +86,6 @@ const Register = () => {
                   }
                 }
               });
-            // .catch(err => { err.response.data.message ? setUnique(err.response) : err.response.data.errors; err.response.data.errors ? setVal(err.response.data.errors) : console.log(err.response) & console.log(unique.data.message) & console.log(err.response) })
     }
 
     return (
@@ -93,7 +94,7 @@ const Register = () => {
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
                     <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                         {/* <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" /> */}
-                        Pharma
+                        
                     </a>
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -114,9 +115,9 @@ const Register = () => {
                                 name="profilePicture"
                                 accept="image/jpeg, image/png"
                                 onChange={handleImageUpload}
-                                style={{ display: 'none' }} // Hide the file input
+                                style={{ display: 'none' }} 
                                 />
-                                <label htmlFor="profile-picture" className="cursor-pointer text-primary-600">
+                                <label htmlFor="profile-picture" className="text-purple-700 hover:text-white border border-purple-700 cursor-pointer hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
                                 Upload Profile Picture
                                 </label>
                                 {profilePicture && (
@@ -177,7 +178,7 @@ const Register = () => {
                                     <button
                                         type="button"
                                         onClick={togglePasswordVisibility}
-                                        className="absolute right-3 top-3 text-gray-600 cursor-pointer"
+                                        className="absolute right-3 top-2 text-gray-600 cursor-pointer"
                                     >
                                         <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
                                     </button>
@@ -196,7 +197,7 @@ const Register = () => {
                                     <button
                                         type="button"
                                         onClick={toggleConfirmPasswordVisibility}
-                                        className="absolute right-3 top-3 text-gray-600 cursor-pointer"
+                                        className="absolute right-3 top-2 text-gray-600 cursor-pointer"
                                     >
                                         <FontAwesomeIcon icon={showConfirmPassword ? faEye : faEyeSlash} />
                                     </button>
@@ -207,10 +208,12 @@ const Register = () => {
                                         {val.terms ? <p className="text-sm text-red-500 ">{val.terms.message}</p> : ""}
                                     </div>
                                     <div className="ml-3 text-sm">
-                                        <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
+                                        <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" 
+                                        target ="_blank"
+                                        href="https://www.iubenda.com/en/help/2859-terms-and-conditions-when-are-they-needed#:~:text=%E2%80%9CTerms%20and%20Conditions%E2%80%9D%20is%20the,%E2%80%9D%20or%20%E2%80%9CLegal%20Notes%E2%80%9D.">Terms and Conditions</a></label>
                                     </div>
                                 </div>
-                                <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                                <button type="submit" className="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Create an account</button>
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                     Already have an account? <Link
                                         to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
